@@ -15,7 +15,7 @@ fi
 if [ $KCPTUN_PS ];then
     sed -i "s#kcptun_parityshard_value#$KCPTUN_PS#g" /etc/supervisor/conf.d/supervisord.conf
 else
-    sed -i "s#kcptun_parityshard_value#4#g" /etc/supervisor/conf.d/supervisord.conf
+    sed -i "s#kcptun_parityshard_value#8#g" /etc/supervisor/conf.d/supervisord.conf
 fi
 
 exec "$@"
