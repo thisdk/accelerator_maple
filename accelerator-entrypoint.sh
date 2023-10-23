@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ $UDP2RAW_ADDRESS ];then
-    sed -i "s#udp2raw_listener_address#$UDP2RAW_PORT#g" /etc/supervisor/conf.d/supervisord.conf
+    sed -i "s#udp2raw_listener_address#$UDP2RAW_ADDRESS#g" /etc/supervisor/conf.d/supervisord.conf
 else
     sed -i "s#udp2raw_listener_address#0.0.0.0#g" /etc/supervisor/conf.d/supervisord.conf
 fi
