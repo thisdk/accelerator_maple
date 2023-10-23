@@ -14,8 +14,8 @@ RUN wget -O ~/shadowsocks.tar.xz ${SHADOWSOCKS_URL} && tar -xvf ~/shadowsocks.ta
 
 RUN apk add --no-cache iptables ip6tables supervisor
 
-RUN wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/wormhole/main/accelerator-supervisord.conf
-RUN wget -O ~/accelerator-entrypoint.sh https://raw.githubusercontent.com/thisdk/wormhole/main/accelerator-entrypoint.sh && chmod +x ~/accelerator-entrypoint.sh
+RUN wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-supervisord.conf
+RUN wget -O ~/accelerator-entrypoint.sh https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-entrypoint.sh && chmod +x ~/accelerator-entrypoint.sh
 
 RUN mkdir /etc/supervisor/ && mkdir /etc/supervisor/conf.d/
 RUN mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/accelerator-entrypoint.sh /usr/bin/accelerator-entrypoint.sh
