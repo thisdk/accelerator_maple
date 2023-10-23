@@ -1,0 +1,25 @@
+FROM alpine:latest
+
+ARG KCPTUN_VERSION="20230811"
+ARG UDP2RAW_VERSION="20230206.0"
+ARG SHADOWSOCKS_VERSION="1.17.0"
+
+ARG KCPTUN_URL="https://github.com/xtaci/kcptun/releases/download/v${KCPTUN_VERSION}/kcptun-linux-amd64-${KCPTUN_VERSION}.tar.gz"
+ARG UDP2RAW_URL="https://github.com/wangyu-/udp2raw/releases/download/${UDP2RAW_VERSION}/udp2raw_binaries.tar.gz"
+ARG SHADOWSOCKS_URL="https://github.com/shadowsocks/shadowsocks-rust/releases/download/v${SHADOWSOCKS_VERSION}/shadowsocks-v${SHADOWSOCKS_VERSION}.x86_64-unknown-linux-musl.tar.xz"
+
+RUN wget -O ~/kcptun.tar.gz ${KCPTUN_URL} && tar -zxvf ~/kcptun.tar.gz server_linux_amd64 -C /tmp/ && mv /tmp/server_linux_amd64 /usr/bin/kcptun && rm -f ~/kcptun.tar.gz
+RUN wget -O ~/udp2raw.tar.gz ${UDP2RAW_URL} && tar -zxvf ~/udp2raw.tar.gz udp2raw_amd64_hw_aes -C /tmp/ && mv /tmp/udp2raw_amd64_hw_aes /usr/bin/udp2raw && rm -f ~/udp2raw.tar.gz
+RUN wget -O ~/shadowsocks.tar.xz ${SHADOWSOCKS_URL} && tar -xvf ~/shadowsocks.tar.xz ssserver -C /tmp/ && mv /tmp/ssserver /usr/bin/shadowsocks && rm -f ~/shadowsocks.tar.xz
+
+RUN apk add --no-cache iptables ip6tables supervisor
+
+RUN wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/wormhole/main/accelerator-supervisord.conf
+RUN wget -O ~/accelerator-entrypoint.sh https://raw.githubusercontent.com/thisdk/wormhole/main/accelerator-entrypoint.sh && chmod +x ~/accelerator-entrypoint.sh
+
+RUN mkdir /etc/supervisor/ && mkdir /etc/supervisor/conf.d/
+RUN mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/accelerator-entrypoint.sh /usr/bin/accelerator-entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/accelerator-entrypoint.sh"]
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
