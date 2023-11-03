@@ -12,16 +12,16 @@ else
     sed -i "s#udp2raw_listener_port#8585#g" /etc/supervisor/conf.d/supervisord.conf
 fi
 
-if [ $KCPTUN_PS ];then
-    sed -i "s#kcptun_parityshard_value#$KCPTUN_PS#g" /etc/supervisor/conf.d/supervisord.conf
-else
-    sed -i "s#kcptun_parityshard_value#8#g" /etc/supervisor/conf.d/supervisord.conf
-fi
-
 if [ $KCPTUN_DS ];then
     sed -i "s#kcptun_datashard_value#$KCPTUN_DS#g" /etc/supervisor/conf.d/supervisord.conf
 else
     sed -i "s#kcptun_datashard_value#2#g" /etc/supervisor/conf.d/supervisord.conf
+fi
+
+if [ $KCPTUN_PS ];then
+    sed -i "s#kcptun_parityshard_value#$KCPTUN_PS#g" /etc/supervisor/conf.d/supervisord.conf
+else
+    sed -i "s#kcptun_parityshard_value#8#g" /etc/supervisor/conf.d/supervisord.conf
 fi
 
 exec "$@"
