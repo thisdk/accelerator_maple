@@ -7,7 +7,7 @@ ARG KCPTUBE_URL="https://github.com/cnbatch/kcptube/releases/download/v${KCPTUBE
 ARG SINGBOX_URL="https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-amd64v3.tar.gz"
 
 RUN wget -O ~/kcptube.tar.bz2 ${KCPTUBE_URL} && tar -jxvf ~/kcptube.tar.bz2 kcptube -C /tmp/ && mv /tmp/kcptube /usr/bin/kcptube && rm -f ~/kcptube.tar.bz2
-RUN wget -O ~/sing-box.tar.gz ${SINGBOX_URL} && tar -zxvf ~/sing-box.tar.gz sing-box -C /tmp/ && mv /tmp/sing-box /usr/bin/sing-box && rm -f ~/sing-box.tar.gz
+RUN wget -O ~/sing-box.tar.gz ${SINGBOX_URL} && tar -zxvf ~/sing-box.tar.gz sing-box-${SINGBOX_VERSION}-linux-amd64v3/sing-box -C /tmp/ && mv /tmp/sing-box /usr/bin/sing-box && rm -f ~/sing-box.tar.gz
 
 RUN apk add --no-cache supervisor
 
