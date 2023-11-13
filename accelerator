@@ -13,7 +13,7 @@ RUN apk add --no-cache supervisor
 
 RUN wget -O ~/config.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-kcptube.conf
 RUN wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-supervisord.conf
-RUN wget -O ~/entrypoint.sh https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-entrypoint.sh && chmod +x ~/accelerator-entrypoint.sh
+RUN wget -O ~/entrypoint.sh https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-entrypoint.sh && chmod +x ~/entrypoint.sh
 
 RUN mkdir /etc/supervisor/ && mkdir /etc/supervisor/conf.d/ && mkdir /etc/kcptube/
 RUN mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/entrypoint.sh /usr/bin/entrypoint.sh && mv ~/config.conf /etc/kcptube/config.conf
