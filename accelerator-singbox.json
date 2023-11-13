@@ -6,7 +6,7 @@
     "inbounds": [
         {
             "type": "shadowsocks",
-            "listen": "singbox-port-value",
+            "listen": "singbox-address-value",
             "listen_port": 8388,
             "tcp_fast_open": true,
             "method": "none",
