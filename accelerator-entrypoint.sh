@@ -2,8 +2,10 @@
 
 if [ "$KCPTUBE_ADDRESS" ];then
     sed -i "s#kcptube_address_value#$KCPTUBE_ADDRESS#g" /etc/kcptube/config.conf
+    sed -i "s#singbox-address-value#$KCPTUBE_ADDRESS#g" /etc/sing-box/config.json
 else
     sed -i "s#kcptube_address_value#0.0.0.0#g" /etc/kcptube/config.conf
+    sed -i "s#singbox-address-value#127.0.0.1#g" /etc/sing-box/config.json
 fi
 
 if [ "$KCPTUBE_PORT_START" ] && [ "$KCPTUBE_PORT_END" ]; then
