@@ -1,18 +1,15 @@
 FROM alpine:latest
 
-ARG UDP2RAW_VERSION="20230206.0"
-ARG KCPTUN_VERSION="20231012"
+ARG KCPTUBE_VERSION="0.4.3"
 ARG SHADOWSOCKS_VERSION="1.17.0"
 
-ARG UDP2RAW_URL="https://github.com/wangyu-/udp2raw/releases/download/${UDP2RAW_VERSION}/udp2raw_binaries.tar.gz"
-ARG KCPTUN_URL="https://github.com/xtaci/kcptun/releases/download/v${KCPTUN_VERSION}/kcptun-linux-amd64-${KCPTUN_VERSION}.tar.gz"
 ARG SHADOWSOCKS_URL="https://github.com/shadowsocks/shadowsocks-rust/releases/download/v${SHADOWSOCKS_VERSION}/shadowsocks-v${SHADOWSOCKS_VERSION}.x86_64-unknown-linux-musl.tar.xz"
+ARG KCPTUBE_URL="https://github.com/cnbatch/kcptube/releases/download/v${KCPTUBE_VERSION}/kcptube-linux-musl-x64.tar.bz2"
 
-RUN wget -O ~/udp2raw.tar.gz ${UDP2RAW_URL} && tar -zxvf ~/udp2raw.tar.gz udp2raw_amd64_hw_aes -C /tmp/ && mv /tmp/udp2raw_amd64_hw_aes /usr/bin/udp2raw && rm -f ~/udp2raw.tar.gz
-RUN wget -O ~/kcptun.tar.gz ${KCPTUN_URL} && tar -zxvf ~/kcptun.tar.gz server_linux_amd64 -C /tmp/ && mv /tmp/server_linux_amd64 /usr/bin/kcptun && rm -f ~/kcptun.tar.gz
+RUN wget -O ~/kcptube.tar.bz2 ${KCPTUBE_URL} && tar -jxvf ~/kcptube.tar.bz2 kcptube -C /tmp/ && mv /tmp/kcptube /usr/bin/kcptube && rm -f ~/kcptube.tar.bz2
 RUN wget -O ~/shadowsocks.tar.xz ${SHADOWSOCKS_URL} && tar -xvf ~/shadowsocks.tar.xz ssserver -C /tmp/ && mv /tmp/ssserver /usr/bin/shadowsocks && rm -f ~/shadowsocks.tar.xz
 
-RUN apk add --no-cache iptables ip6tables supervisor
+RUN apk add --no-cache supervisor
 
 RUN wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-supervisord.conf
 RUN wget -O ~/accelerator-entrypoint.sh https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-entrypoint.sh && chmod +x ~/accelerator-entrypoint.sh
