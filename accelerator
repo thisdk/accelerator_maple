@@ -11,12 +11,13 @@ RUN wget -O ~/sing-box.tar.gz ${SINGBOX_URL} && tar -zxvf ~/sing-box.tar.gz sing
 
 RUN apk add --no-cache supervisor
 
+RUN wget -O ~/config.json https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-singbox.json
 RUN wget -O ~/config.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-kcptube.conf
 RUN wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-supervisord.conf
 RUN wget -O ~/entrypoint.sh https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-entrypoint.sh && chmod +x ~/entrypoint.sh
 
-RUN mkdir /etc/supervisor/ && mkdir /etc/supervisor/conf.d/ && mkdir /etc/kcptube/
-RUN mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/entrypoint.sh /usr/bin/entrypoint.sh && mv ~/config.conf /etc/kcptube/config.conf
+RUN mkdir /etc/supervisor/ && mkdir /etc/supervisor/conf.d/ && mkdir /etc/kcptube/ && mkdir /etc/sing-box/
+RUN mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/entrypoint.sh /usr/bin/entrypoint.sh && mv ~/config.conf /etc/kcptube/config.conf && mv ~/config.json /etc/sing-box/config.json
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
