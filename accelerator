@@ -6,18 +6,16 @@ ARG SINGBOX_VERSION="1.6.4"
 ARG KCPTUBE_URL="https://github.com/cnbatch/kcptube/releases/download/v${KCPTUBE_VERSION}/kcptube-linux-musl-x64.tar.bz2"
 ARG SINGBOX_URL="https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-amd64.tar.gz"
 
-RUN wget -O ~/kcptube.tar.bz2 ${KCPTUBE_URL} && tar -jxvf ~/kcptube.tar.bz2 kcptube -C /tmp/ && mv /tmp/kcptube /usr/bin/kcptube && rm -f ~/kcptube.tar.bz2
-RUN wget -O ~/sing-box.tar.gz ${SINGBOX_URL} && tar -zxvf ~/sing-box.tar.gz sing-box-${SINGBOX_VERSION}-linux-amd64/sing-box -C /tmp/ && mv /tmp/sing-box-${SINGBOX_VERSION}-linux-amd64/sing-box /usr/bin/sing-box && rm -f ~/sing-box.tar.gz
-
-RUN apk add --no-cache supervisor
-
-RUN wget -O ~/config.json https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-singbox.json
-RUN wget -O ~/config.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-kcptube.conf
-RUN wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-supervisord.conf
-RUN wget -O ~/entrypoint.sh https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-entrypoint.sh && chmod +x ~/entrypoint.sh
-
-RUN mkdir /etc/supervisor/ && mkdir /etc/supervisor/conf.d/ && mkdir /etc/kcptube/ && mkdir /etc/sing-box/
-RUN mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/entrypoint.sh /usr/bin/entrypoint.sh && mv ~/config.conf /etc/kcptube/config.conf && mv ~/config.json /etc/sing-box/config.json
+RUN set ex \
+    && apk add --no-cache supervisor \
+    && wget -O ~/kcptube.tar.bz2 ${KCPTUBE_URL} && tar -jxvf ~/kcptube.tar.bz2 kcptube -C /tmp/ && mv /tmp/kcptube /usr/bin/kcptube && rm -f ~/kcptube.tar.bz2 \
+    && wget -O ~/sing-box.tar.gz ${SINGBOX_URL} && tar -zxvf ~/sing-box.tar.gz sing-box-${SINGBOX_VERSION}-linux-amd64/sing-box -C /tmp/ && mv /tmp/sing-box-${SINGBOX_VERSION}-linux-amd64/sing-box /usr/bin/sing-box && rm -f ~/sing-box.tar.gz \
+    && wget -O ~/config.json https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-singbox.json \
+    && wget -O ~/config.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-kcptube.conf \
+    && wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-supervisord.conf \
+    && wget -O ~/entrypoint.sh https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-entrypoint.sh && chmod +x ~/entrypoint.sh \
+    && mkdir /etc/supervisor/ && mkdir /etc/supervisor/conf.d/ && mkdir /etc/kcptube/ && mkdir /etc/sing-box/ \
+    && mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/entrypoint.sh /usr/bin/entrypoint.sh && mv ~/config.conf /etc/kcptube/config.conf && mv ~/config.json /etc/sing-box/config.json
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
