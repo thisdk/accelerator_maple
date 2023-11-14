@@ -6,7 +6,7 @@ ARG SINGBOX_VERSION="1.6.4"
 ARG KCPTUBE_URL="https://github.com/cnbatch/kcptube/releases/download/v${KCPTUBE_VERSION}/kcptube-linux-musl-x64.tar.bz2"
 ARG SINGBOX_URL="https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-amd64.tar.gz"
 
-RUN set ex \
+RUN set -ex \
     && apk add --no-cache supervisor \
     && wget -O ~/kcptube.tar.bz2 ${KCPTUBE_URL} && tar -jxvf ~/kcptube.tar.bz2 kcptube -C /tmp/ && mv /tmp/kcptube /usr/bin/kcptube && rm -f ~/kcptube.tar.bz2 \
     && wget -O ~/sing-box.tar.gz ${SINGBOX_URL} && tar -zxvf ~/sing-box.tar.gz sing-box-${SINGBOX_VERSION}-linux-amd64/sing-box -C /tmp/ && mv /tmp/sing-box-${SINGBOX_VERSION}-linux-amd64/sing-box /usr/bin/sing-box && rm -f ~/sing-box.tar.gz \
