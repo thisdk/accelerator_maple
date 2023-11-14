@@ -34,15 +34,7 @@
             "domain_strategy": "prefer_ipv6",
             "tcp_fast_open": true,
             "method": "none",
-            "password": "game",
-            "multiplex": {
-                "enabled": true,
-                "brutal": {
-                    "enabled": true,
-                    "up_mbps": 1024,
-                    "down_mbps": 1024
-                }
-            }
+            "password": "game"
         }
     ],
     "outbounds": [
