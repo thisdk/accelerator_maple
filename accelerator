@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ARG KCPTUBE_VERSION="0.4.3"
+ARG KCPTUBE_VERSION="0.4.4"
 ARG SINGBOX_VERSION="1.6.5"
 
 ARG KCPTUBE_URL="https://github.com/cnbatch/kcptube/releases/download/v${KCPTUBE_VERSION}/kcptube-linux-musl-x64.tar.bz2"
