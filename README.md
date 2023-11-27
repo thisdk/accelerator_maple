@@ -4,6 +4,6 @@ a game accelerator
 
 ```shell
 
-docker run --restart=always --network host --name accelerator -e KCPTUBE_ADDRESS=::1 -e KCPTUBE_PORT_START=55000 -e KCPTUBE_PORT_END=65000 -d accelerator
+docker run --restart=always --network jason --name accelerator -p 8575-8595:8575-8595/udp -e UDPHOP_PORT=8575-8595 -d accelerator
 
 ```
