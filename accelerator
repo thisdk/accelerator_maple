@@ -1,16 +1,16 @@
 FROM alpine:latest
 
-ARG KCPTUBE_VERSION="0.5.0"
+ARG UDPHOP_VERSION="0.9.0"
 
-ARG KCPTUBE_URL="https://github.com/cnbatch/kcptube/releases/download/v${KCPTUBE_VERSION}/kcptube-linux-musl-x64.tar.bz2"
+ARG UDPHOP_URL="https://github.com/cnbatch/udphop/releases/download/v${UDPHOP_VERSION}/udphop-linux-musl-x64.tar.bz2"
 
 RUN set -ex \
     && apk add --no-cache supervisor \
-    && wget -O ~/kcptube.tar.bz2 ${KCPTUBE_URL} && tar -jxvf ~/kcptube.tar.bz2 kcptube -C /tmp/ && mv /tmp/kcptube /usr/bin/kcptube && rm -f ~/kcptube.tar.bz2 \
-    && wget -O ~/config.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-kcptube.conf && mkdir /etc/kcptube/ \
+    && wget -O ~/udphop.tar.bz2 ${UDPHOP_URL} && tar -jxvf ~/udphop.tar.bz2 udphop -C /tmp/ && mv /tmp/udphop /usr/bin/udphop && rm -f ~/udphop.tar.bz2 \
+    && wget -O ~/config.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-udphop.conf && mkdir /etc/udphop/ \
     && wget -O ~/supervisord.conf https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-supervisord.conf && mkdir /etc/supervisor/ && mkdir /etc/supervisor/conf.d/ \
     && wget -O ~/entrypoint.sh https://raw.githubusercontent.com/thisdk/accelerator/main/accelerator-entrypoint.sh && chmod +x ~/entrypoint.sh \
-    && mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/entrypoint.sh /usr/bin/entrypoint.sh && mv ~/config.conf /etc/kcptube/config.conf
+    && mv ~/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && mv ~/entrypoint.sh /usr/bin/entrypoint.sh && mv ~/config.conf /etc/udphop/config.conf
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
