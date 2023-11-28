@@ -1,9 +1,9 @@
 #!/bin/sh
 
-if [ "$UDPHOP_PORT" ];then
-    sed -i "s#udphop_port#$UDPHOP_PORT#g" /etc/udphop/config.conf
+if [ "$KCPTUBE_PORT" ];then
+    sed -i "s#kcptube_port#$KCPTUBE_PORT#g" /etc/kcptube/config.conf
 else
-    sed -i "s#udphop_port#8585#g" /etc/udphop/config.conf
+    sed -i "s#kcptube_port#8585#g" /etc/kcptube/config.conf
 fi
 
 exec "$@"
